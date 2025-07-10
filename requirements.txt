@@ -1,0 +1,7 @@
+pytest
+
+#Formatação do código
+black 
+
+#Cobertura de testes
+coverage
