@@ -53,8 +53,9 @@ class Dijkstra:
         if (distances[city2] != float('inf')): # Existe um caminho de city1 até city 2
             current_city = city2
             while(current_city != city1):
-                current_city = previous[current_city]
-                path.append(current_city)
+                if (previous[current_city] != None):
+                    current_city = previous[current_city]
+                    path.append(current_city)
 
             path = path[::-1] # inverte o caminho
 
