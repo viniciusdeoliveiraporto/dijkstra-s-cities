@@ -18,11 +18,13 @@ class Dijkstra:
         city2 = city2.upper() # padronizar para uppercase
 
 
-       
         distances = {}
         previous = {}
         cities = {}
 
+        # preenche o cities com os nomes das cidades presentes no grafo e preenche distances com INF e previous com None para cada cidade.
+        # É necessário dois laços pra casos de arestas direcionadas pois o grafo teria o formato 
+        # {city1: {city2: distance}}, nesse caso é necessário setar distance, previous para city2 e colocar city2 em cities para indicar que ela existe no grafo.
         for key1,value in graph.items():
             cities[key1] = True
             distances[key1] = float('inf')
@@ -32,6 +34,8 @@ class Dijkstra:
                 distances[key2] = float('inf')
                 previous[key2] = None
 
+
+        # Verifica se city1 ou city2 não existem
         if (cities.get(city1) is None or cities.get(city2)  is None):
             return "No able path!"
         
@@ -41,8 +45,8 @@ class Dijkstra:
         pq = PriorityQueue()
 
         pq.put((0.0, city1))
-        
         distances[city1] = 0.0
+
         while(not pq.empty()):
             current_distance, current_city = pq.get()
 
@@ -61,8 +65,7 @@ class Dijkstra:
         distance_city1_to_city2 = distances[city2]
         path = [city2]
 
-        print(distance_city1_to_city2, "  TESTE ")
-        if (distances[city2] != float('inf')): # Existe um caminho de city1 até city 2
+        if (distance_city1_to_city2 != float('inf')): # Existe um caminho de city1 até city 2
             current_city = city2
             while(current_city != city1):
                 if (previous[current_city] != None):
@@ -84,7 +87,7 @@ d = Dijkstra()
 
 #graph = {"CAMPINA GRANDE": {"LAGOA SECA": 2, "SÃO JOSÉ DA MATA": 11}, "LAGOA SECA": {"CAMPINA GRANDE": 2, "ESPERANÇA": 3}, "SÃO JOSÉ DA MATA": {"CAMPINA GRANDE": 11, "ESPERANÇA": 10}, "ESPERANÇA": {"SÃO JOSÉ DA MATA": 10, "LAGOA SECA": 3}, "SÃO PAULO": {"TESTE": 2}, "TESTE": {"SÃO PAULO": 2}}
 
-graph = {'CAMPINA GRANDE': {'LAGOA SECA': 8.8, 'QUEIMADAS': 17.0, 'Puxinanã': 14.6, 'Riachão do Bacamarte': 30.8, 'BOA VISTA': 44.1, 'SOLEDADE': 57.2, 'POCINHNHOS': 29.6, 'Fagundes': 26.9}}
+graph = {'CAMPINA GRANDE': {'LAGOA SECA': 8.8, 'QUEIMADAS': 17.0, 'BOA VISTA': 44.1, 'SOLEDADE': 57.2, 'POCINHNHOS': 29.6, 'FAGUNDES': 26.9}}
 
 print(d.best_path(graph, "CAMPINA GRANDE", "POCINHNHOS"))  #Esperado (5, ['CAMPINA GRANDE', 'LAGOA SECA', 'ESPERANÇA'])
 
