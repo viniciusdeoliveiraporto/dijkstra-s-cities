@@ -4,4 +4,4 @@ pytest
 black 
 
 #Cobertura de testes
-coverage
+pytest-cov

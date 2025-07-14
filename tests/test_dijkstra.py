@@ -1,5 +1,5 @@
 import unittest
-from src.Dijkstra import Dijkstra
+from src.dijkstra import Dijkstra
 
 class TestDijkstra(unittest.TestCase):
 
@@ -20,10 +20,13 @@ class TestDijkstra(unittest.TestCase):
     def test_no_able_path(self):
         self.assertEqual(self.dk.best_path("João Pessoa", "New York"), "No able path!")
 
+    def test_shortest_path_with_multiple_options_to_adjacent_city(self):
+        self.assertEqual(self.dk.best_path("Campina Grande", "Boa Vista"), (["Campina Grande", "Boa Vista"], 44.3))
+
     def test_inexistent_city(self):
-        self.assertEqual(self.dk.best_path("Inexistent City", "Lagoa Seca"), "No able path!")
-        self.assertEqual(self.dk.best_path("Campina Grande", "Inexistent City"), "No able path!")
-        self.assertEqual(self.dk.best_path("Inexistent City", "Inexistent City"), "No able path!")
+        self.assertEqual(self.dk.best_path("Inexistent City", "Lagoa Seca"), "One of the cities doesn't exist!")
+        self.assertEqual(self.dk.best_path("Campina Grande", "Inexistent City"), "One of the cities doesn't exist!")
+        self.assertEqual(self.dk.best_path("Inexistent City", "Inexistent City"), "One of the cities doesn't exist!")
 
     def test_none(self):
         self.assertIsNone(self.dk.best_path(None, "Lagoa Seca"), None)
