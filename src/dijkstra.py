@@ -7,12 +7,12 @@ class Dijkstra:
 
     def best_path(self, graph:dict, city1: str, city2: str): 
 
-        if (type(city1) != str or type(city2) != str):
+        if (not isinstance(city1, str) or not isinstance(city2, str) or not isinstance(graph, dict)):
             return None
         
         #retirar possíveis espaços 
-        city1 = " ".join([word for word in city1.strip(" ").split(" ") if word != ""])
-        city2 = " ".join([word for word in city2.strip(" ").split(" ") if word != ""])
+        city1 = " ".join(city1.split())
+        city2 = " ".join(city2.split())
 
         city1 = city1.upper() # padronizar para uppercase
         city2 = city2.upper() # padronizar para uppercase
@@ -89,7 +89,7 @@ d = Dijkstra()
 
 graph = {'CAMPINA GRANDE': {'LAGOA SECA': 8.8, 'QUEIMADAS': 17.0, 'BOA VISTA': 44.1, 'SOLEDADE': 57.2, 'POCINHNHOS': 29.6, 'FAGUNDES': 26.9}}
 
-print(d.best_path(graph, "CAMPINA GRANDE", "POCINHNHOS"))  #Esperado (5, ['CAMPINA GRANDE', 'LAGOA SECA', 'ESPERANÇA'])
+print(d.best_path(graph, "            CAMPINA             GRANDE        ", "POCINHNHOS"))  #Esperado (5, ['CAMPINA GRANDE', 'LAGOA SECA', 'ESPERANÇA'])
 
 # print(d.best_path(graph, "Campina Grande", "Campina Grande")) #Esperado "(0.0,[])"  
 
