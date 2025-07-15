@@ -1,11 +1,17 @@
 from queue import PriorityQueue
 
-class Dijkstra:
-    def __init__(self):
-        pass
+class AgentMap:
+    def __init__(self, graph:dict):
+        self.graph = graph
 
 
-    def best_path(self, graph:dict, city1: str, city2: str): 
+    def best_path(self, city1: str, city2: str, new_graph:dict=None):  # Utilizando Dijkstra
+
+        if new_graph is not None:
+            self.graph = new_graph
+
+        if self.graph is None or self.graph == {}:
+            return "No able path!"
 
         if (type(city1) != str or type(city2) != str):
             return None
@@ -83,21 +89,21 @@ class Dijkstra:
 
 
 
-d = Dijkstra()
+am = AgentMap()
 
 #graph = {"CAMPINA GRANDE": {"LAGOA SECA": 2, "SÃO JOSÉ DA MATA": 11}, "LAGOA SECA": {"CAMPINA GRANDE": 2, "ESPERANÇA": 3}, "SÃO JOSÉ DA MATA": {"CAMPINA GRANDE": 11, "ESPERANÇA": 10}, "ESPERANÇA": {"SÃO JOSÉ DA MATA": 10, "LAGOA SECA": 3}, "SÃO PAULO": {"TESTE": 2}, "TESTE": {"SÃO PAULO": 2}}
 
 graph = {'CAMPINA GRANDE': {'LAGOA SECA': 8.8, 'QUEIMADAS': 17.0, 'BOA VISTA': 44.1, 'SOLEDADE': 57.2, 'POCINHNHOS': 29.6, 'FAGUNDES': 26.9}}
 
-print(d.best_path(graph, "CAMPINA GRANDE", "POCINHNHOS"))  #Esperado (5, ['CAMPINA GRANDE', 'LAGOA SECA', 'ESPERANÇA'])
+#print(am.best_path(graph, "CAMPINA GRANDE", "POCINHNHOS"))  #Esperado (5, ['CAMPINA GRANDE', 'LAGOA SECA', 'ESPERANÇA'])
 
-# print(d.best_path(graph, "Campina Grande", "Campina Grande")) #Esperado "(0.0,[])"  
+# print(am.best_path(graph, "Campina Grande", "Campina Grande")) #Esperado "(0.0,[])"  
 
-# print(d.best_path(graph, "Campina Grande", "João Pessoa")) #Esperado "No able path!"
+# print(am.best_path(graph, "Campina Grande", "João Pessoa")) #Esperado "No able path!"
 
 
-# print(d.best_path(graph, "Campina Grande", "São Paulo")) #Esperado "No able path!" 
+# print(am.best_path(graph, "Campina Grande", "São Paulo")) #Esperado "No able path!" 
 
-# print(d.best_path(graph, 2, "João Pessoa"))  # Esperado None
+# print(am.best_path(graph, 2, "João Pessoa"))  # Esperado None
 
 
