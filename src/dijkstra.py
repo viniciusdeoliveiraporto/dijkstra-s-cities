@@ -7,7 +7,7 @@ class Dijkstra:
 
     def best_path(self, graph:dict, city1: str, city2: str): 
 
-        if (not isinstance(city1, str) or not isinstance(city2, str) or not isinstance(graph, dict)):
+        if (type(city1) != str or type(city2) != str or type(graph) != dict):
             return None
         
         #retirar possíveis espaços 
@@ -37,7 +37,7 @@ class Dijkstra:
 
         # Verifica se city1 ou city2 não existem
         if (cities.get(city1) is None or cities.get(city2)  is None):
-            return "No able path!"
+            return "One of the cities doesn't exist!"
         
         if (city1 == city2):
             return 0.0,[]
