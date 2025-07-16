@@ -3,13 +3,13 @@ import csv
 from dijkstra import Dijkstra
 
 if __name__ == '__main__':
-    while (True):
+    while True:
         print('''Insira o caminho do csv contendo as informações das cidades
                 Cada linha do csv deve possuir o formato:
                     nome da cidade referência, cidade vizinha 1, distância até cidade 1, cidade vizinha 2, distância até cidade 2, ....
             ''')
         csv_path = input()
-        grafo = dict()
+        grafo = {}
         d = Dijkstra()
         
         if os.path.exists(csv_path):
@@ -20,7 +20,7 @@ if __name__ == '__main__':
                 for linha in leitor:
                     if linha == []:
                         break
-                    dictionary = dict()
+                    dictionary = {}
                     for i in range(1, len(linha), 2):
                         distancia = linha[i+1].replace(",", ".")
                         cidade = linha[i].upper()
