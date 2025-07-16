@@ -1,12 +1,14 @@
 import unittest
 from src.agent_map import AgentMap
 import pandas as pd
+from src.utils import convert_df_to_graph
 
 class TestAgentMap(unittest.TestCase):
 
     def setUp(self):
-        df_cities = pd.read_csv("data/cities_graph.csv")
-        self.am = AgentMap(df_cities)
+        df_cities = pd.read_csv("data/cities.csv")
+        cities_graph = convert_df_to_graph(df_cities)
+        self.am = AgentMap(cities_graph)
 
     def test_best_path_base_case(self):
         self.assertEqual(self.am.best_path("Campina Grande", "Lagoa Seca"), (["Campina Grande", "Lagoa Seca"], 8.8))
