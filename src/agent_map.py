@@ -1,6 +1,6 @@
 from queue import PriorityQueue
 
-class Dijkstra:
+class AgentMap:
     """Classe para encontrar o menor caminho entre cidades usando Dijkstra."""
     def __init__(self):
         pass
@@ -61,7 +61,7 @@ class Dijkstra:
 
         while not pq.empty():
             current_distance, current_city = pq.get()
-
+            
             if distances[current_city] < current_distance:
                 continue
 
@@ -80,5 +80,23 @@ class Dijkstra:
         else:
             return "No able path!"
         
-        return distance_city1_to_city2, path
+        return f"The distance of the best path is {distance_city1_to_city2}!\nFollow this path: {path}."
     
+
+
+# am = AgentMap()
+
+# graph = {"CAMPINA GRANDE": {"LAGOA SECA": 2, "SÃO JOSÉ DA MATA": 11}, "LAGOA SECA": {"CAMPINA GRANDE": 2, "ESPERANÇA": 3}, "SÃO JOSÉ DA MATA": {"CAMPINA GRANDE": 11, "ESPERANÇA": 10}, "ESPERANÇA": {"SÃO JOSÉ DA MATA": 10, "LAGOA SECA": 3}, "SÃO PAULO": {"TESTE": 2}, "TESTE": {"SÃO PAULO": 2}}
+
+# #graph = {'CAMPINA GRANDE': {'LAGOA SECA': 8.8, 'QUEIMADAS': 17.0, 'BOA VISTA': 44.1, 'SOLEDADE': 57.2, 'POCINHNHOS': 29.6, 'FAGUNDES': 26.9}}
+
+# print(am.best_path(graph, "CAMPINA GRANDE", "esperança"))  #Esperado (5, ['CAMPINA GRANDE', 'LAGOA SECA', 'ESPERANÇA'])
+
+# # print(am.best_path(graph, "Campina Grande", "Campina Grande")) #Esperado "(0.0,[])"  
+
+# # print(am.best_path(graph, "Campina Grande", "João Pessoa")) #Esperado "No able path!"
+
+
+# # print(am.best_path(graph, "Campina Grande", "São Paulo")) #Esperado "No able path!" 
+
+# # print(am.best_path(graph, 2, "João Pessoa"))  # Esperado None

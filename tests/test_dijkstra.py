@@ -1,5 +1,5 @@
 import unittest
-from src.dijkstra import Dijkstra
+from src.agent_map import Dijkstra
 
 class TestDijkstra(unittest.TestCase):
 

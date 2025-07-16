@@ -1,6 +1,6 @@
 import os
 import csv
-from dijkstra import Dijkstra
+from src.agent_map import Dijkstra
 
 if __name__ == '__main__':
     while True:
