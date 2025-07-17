@@ -58,6 +58,33 @@ class TestAgentMap(unittest.TestCase):
         self.assertIsNone(self.am.best_path({"city": "Rio de Janeiro"}, "São Paulo"))
         self.assertIsNone(self.am.best_path({"city": "Rio de Janeiro"}, {"city": "São Paulo"}))
 
+        new_graph_ex1 = 0.0
+        self.assertIsNone(self.am.best_path("Campina Grande", "Boa Vista", new_graph_ex1))
+        self.assertIsNone(self.am.best_path(0.0, "Boa Vista", new_graph_ex1))
+        self.assertIsNone(self.am.best_path("Campina Grande", 0.0, new_graph_ex1))
+        self.assertIsNone(self.am.best_path(0.0, 0.0, new_graph_ex1))
+
+        new_graph_ex2 = 2
+        self.assertIsNone(self.am.best_path("Campina Grande", "Boa Vista", new_graph_ex2))
+        self.assertIsNone(self.am.best_path(2, "Boa Vista", new_graph_ex2))
+        self.assertIsNone(self.am.best_path("Campina Grande", 2, new_graph_ex2))
+        self.assertIsNone(self.am.best_path(2, 2, new_graph_ex2))
+
+        new_graph_ex3 = False
+        self.assertIsNone(self.am.best_path("Campina Grande", "Boa Vista", new_graph_ex3))
+        self.assertIsNone(self.am.best_path(False, "Boa Vista", new_graph_ex3))
+        self.assertIsNone(self.am.best_path("Campina Grande", False, new_graph_ex3))
+        self.assertIsNone(self.am.best_path(False, False, new_graph_ex3))
+
+        new_graph_ex4 = []
+        self.assertIsNone(self.am.best_path("Campina Grande", "Boa Vista", new_graph_ex4))
+
+        new_graph_ex5 = ()
+        self.assertIsNone(self.am.best_path("Campina Grande", "Boa Vista", new_graph_ex5))
+
+        
+
+
     def test_same_city(self):
         self.assertEqual(self.am.best_path("João Pessoa", "João Pessoa"), ([], 0.0))
         self.assertEqual(self.am.best_path("Soledade", "Soledade"), ([], 0.0))
