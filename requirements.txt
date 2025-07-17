@@ -1,7 +1,10 @@
 pytest
 
-#Formatação do código
+pandas
+
+# Formatação do código
 black 
 
-#Cobertura de testes
+# Cobertura de testes
 pytest-cov
+
