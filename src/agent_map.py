@@ -1,3 +1,8 @@
+'''Esse módulo permite que usemos a estrutura de dados queue (fila)
+    Autor: Aelson Júnior Araújo Diniz da Cunha
+    Data: Julho 2025
+'''
+
 from queue import PriorityQueue
 
 class AgentMap:
@@ -20,7 +25,7 @@ class AgentMap:
                 previous[city] = None
 
         return distances, previous, cities
-    
+
     def find_path(self, previous, city1, city2):
         """Reconstrói o caminho que foi percorrido de city2 até voltar à city1"""
         path = [city2]
@@ -29,7 +34,7 @@ class AgentMap:
             if previous[current_city] is not None:
                 current_city = previous[current_city]
                 path.append(current_city)
-        return path[::-1] 
+        return path[::-1]
 
     def best_path(self, city1: str, city2: str, new_graph:dict=None):
         """Retorna a menor distância e o caminho entre duas cidades."""
@@ -37,10 +42,13 @@ class AgentMap:
         if new_graph is not None:
             self.graph = new_graph
 
-        if not isinstance(city1, str) or not isinstance(city2, str) or not isinstance(self.graph, dict):
+        if not isinstance(city1, str) or not isinstance(city2, str):
             return None
-        
-        # retirar possíveis espaços 
+
+        if not isinstance(self.graph, dict):
+            return None
+
+        # retirar possíveis espaços
         city1 = " ".join(city1.split())
         city2 = " ".join(city2.split())
 
@@ -52,10 +60,10 @@ class AgentMap:
         # Verifica se city1 ou city2 não existem
         if (cities.get(city1) is None or cities.get(city2) is None):
             return "One of the cities doesn't exist!"
-        
+
         if city1 == city2:
             return [], 0.0
-        
+
         pq = PriorityQueue()
 
         pq.put((0.0, city1))
@@ -63,7 +71,7 @@ class AgentMap:
 
         while not pq.empty():
             current_distance, current_city = pq.get()
-            
+
             if distances[current_city] < current_distance:
                 continue
 
@@ -81,5 +89,5 @@ class AgentMap:
             path = self.find_path(previous, city1, city2)
         else:
             return "No able path!"
-        
+
         return path, distance_city1_to_city2
