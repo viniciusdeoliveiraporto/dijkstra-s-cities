@@ -26,7 +26,8 @@ pip install -r requirements.txt
 
 3. To run all unit tests with pytest:
 
-python -m pytest <path/to/file>
+python -m pytest <path/to/file>  // It's mandatory that you run the previous command from the root of the directory
+                                 // Otherwise FileNotFoundErrors will be thrown 
 
 4. To generate a coverage report using pytest-cov:
 
