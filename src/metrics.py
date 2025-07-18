@@ -10,6 +10,8 @@ import pandas as pd
 from agent_map import AgentMap
 from utils import convert_df_to_graph
 from random import randint
+from numpy import mean
+from scipy import stats
 
 geolocator = Nominatim(user_agent="distance_calculator")
 
@@ -70,20 +72,49 @@ def getDijkstraDistance(origin: str, destination: str, agent_map: AgentMap):
 def getStraightLineDistance(coordinates: dict, origin: str, destination: str):
   return geodesic(coordinates[origin], coordinates[destination]).kilometers
 
+#main
 cities = getCitiesFromCsv()
 coordinates = getCoordinatesFromCsv()
-
 df_cities = pd.read_csv("../data/cities.csv") #dataframe para algoritmo
+
 if not df_cities.empty:
   cities_graph = convert_df_to_graph(df_cities)
   am = AgentMap(cities_graph)
+  dijkstra_results = []
+  straightline_results = []
 
-  for comparison in range(10):
+  for comparison in range(100): #comparações entre cidades aleatórias
     origin = cities[randint(0, 61)]
     destination = cities[randint(0, 61)]
 
     dijkstra_distance = getDijkstraDistance(origin, destination, am)
     if isinstance(dijkstra_distance, float):
-      print(f"A distância entre {origin} e {destination} é {dijkstra_distance}")
+      dijkstra_results.append(dijkstra_distance)
+
+      straightline_distance = getStraightLineDistance(coordinates, origin, destination)
+      straightline_results.append(straightline_distance)
+
     else:
       print(f"Não há caminho entre {origin} e {destination}")
+  
+  #obter as estatísticas
+  #dijkstra
+  dijkstra_mean = mean(dijkstra_results)
+  df = len(dijkstra_results) - 1
+  scale = stats.sem(dijkstra_results)
+  dijkstra_confidence_interval = stats.t.interval(confidence=0.95,
+                                                  df=df,
+                                                  scale=scale,
+                                                  loc=dijkstra_mean)
+
+  #linha reta
+  straightline_mean = mean(straightline_results)
+  df = len(straightline_results) - 1
+  scale = stats.sem(straightline_results)
+  straightline_confidence_interval = stats.t.interval(confidence=0.95,
+                                                      df=df,
+                                                      scale=scale,
+                                                      loc=straightline_mean)
+  
+  print(f"Intervalo de confiança de Dijkstra: {dijkstra_confidence_interval[0]} a {dijkstra_confidence_interval[1]}")
+  print(f"Intervalo de confiança de linha reta: {straightline_confidence_interval[0]} a {straightline_confidence_interval[1]}")
