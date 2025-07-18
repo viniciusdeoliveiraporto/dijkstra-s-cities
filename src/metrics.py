@@ -6,12 +6,14 @@ Data: Julho 2025
 """
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
+import matplotlib.pyplot
 import pandas as pd
 from agent_map import AgentMap
 from utils import convert_df_to_graph
 from random import randint
 from numpy import mean
 from scipy import stats
+import matplotlib
 
 geolocator = Nominatim(user_agent="distance_calculator")
 
@@ -93,9 +95,6 @@ if not df_cities.empty:
 
       straightline_distance = getStraightLineDistance(coordinates, origin, destination)
       straightline_results.append(straightline_distance)
-
-    else:
-      print(f"Não há caminho entre {origin} e {destination}")
   
   #obter as estatísticas
   #dijkstra
@@ -118,3 +117,32 @@ if not df_cities.empty:
   
   print(f"Intervalo de confiança de Dijkstra: {dijkstra_confidence_interval[0]} a {dijkstra_confidence_interval[1]}")
   print(f"Intervalo de confiança de linha reta: {straightline_confidence_interval[0]} a {straightline_confidence_interval[1]}")
+
+  #gráfico
+  labels = ["Algoritmo de Dijkstra", "Distância em linha reta"]
+  means = [dijkstra_mean, straightline_mean]
+
+  dijkstra_error = dijkstra_mean - dijkstra_confidence_interval[0]
+  straightline_error = straightline_mean - straightline_confidence_interval[0]
+  errors = [dijkstra_error, straightline_error]
+
+  fig, ax = matplotlib.pyplot.subplots(figsize=(10, 7))
+
+  ax.bar(x=labels,
+       height=means,
+       yerr=errors,
+       capsize=10,
+       color=['blue', 'green'],
+       alpha=0.7,
+       edgecolor='black')
+
+  ax.set_ylabel("Distância Média (km)", fontsize=12)
+  ax.set_title("Comparação de Distâncias com Intervalo de Confiança (95%)", fontsize=15, pad=20)
+  ax.set_ylim(0, max(means) * 1.2)
+  ax.yaxis.grid(True, linestyle='--', which='major', color='grey', alpha=0.3)
+
+  for i, media in enumerate(means):
+    ax.text(i, media + 2, f'{media:.2f}', ha='center', va='bottom', fontsize=11, fontweight='bold')
+
+  matplotlib.pyplot.tight_layout()
+  matplotlib.pyplot.savefig("../data/grafico.png")
