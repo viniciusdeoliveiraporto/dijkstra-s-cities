@@ -59,7 +59,7 @@ class AgentMap:
 
         # Verifica se city1 ou city2 não existem
         if (cities.get(city1) is None or cities.get(city2) is None):
-            return "One of the cities doesn't exist!"
+            return "One of the cities doesn't exist in the file!"
 
         if city1 == city2:
             return [], 0.0
