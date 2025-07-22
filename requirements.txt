@@ -2,6 +2,10 @@ pytest
 
 pandas
 
+# Metricas estatiscas de funcionamento do codigo
+geopy
+matplotlib
+
 # Formatação do código
 black 
 
